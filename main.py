@@ -19,6 +19,7 @@ st.set_page_config(
 # ==========================================
 # 2. その他のライブラリ読み込み
 # ==========================================
+import os  # 追加
 from dotenv import load_dotenv
 import logging
 import utils
@@ -31,8 +32,12 @@ import components as cn
 # ログ出力を行うためのロガーの設定
 logger = logging.getLogger(ct.LOGGER_NAME)
 
-# 環境変数の読み込み
+# 環境変数の読み込み (.envがあれば読む)
 load_dotenv()
+
+# ★★★ 追加修正: Streamlit CloudのSecretsからAPIキーを読み込む処理 ★★★
+if "OPENAI_API_KEY" in st.secrets:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 """
 このファイルは、Webアプリのメイン処理が記述されたファイルです。
@@ -48,7 +53,8 @@ except Exception as e:
     # エラーログの出力
     logger.error(f"{ct.INITIALIZE_ERROR_MESSAGE}\n{e}")
     # エラーメッセージの画面表示
-    st.error(utils.build_error_message(ct.INITIALIZE_ERROR_MESSAGE), icon=ct.ERROR_ICON)
+    # ここでエラーの具体的な内容(e)も画面に出すと原因がわかりやすくなります
+    st.error(f"{utils.build_error_message(ct.INITIALIZE_ERROR_MESSAGE)}\n\nエラー詳細: {e}", icon=ct.ERROR_ICON)
     # 後続の処理を中断
     st.stop()
 
@@ -59,7 +65,7 @@ if not "initialized" in st.session_state:
 
 
 ############################################################
-# 4. 初期表示（課題③のため修正
+# 4. 初期表示
 ############################################################
 # --- サイドバー（左側）の表示 ---
 with st.sidebar:
@@ -67,14 +73,10 @@ with st.sidebar:
     st.markdown("### 利用目的")
     
     # モード選択ボタンと説明文をサイドバーに表示
-    # 「with st.sidebar:」の中で呼び出すことで、components側の修正なしでサイドバーに入ります
     cn.display_select_mode()
 
-# --- メインエリア（右側）の表示 ---
-# タイトル表示
+# メインエリアの表示など（必要なら追加、なければこのままでOK）
 cn.display_app_title()
-
-# AIメッセージの初期表示
 cn.display_initial_ai_message()
 
 ############################################################
