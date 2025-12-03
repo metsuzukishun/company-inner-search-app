@@ -39,9 +39,7 @@ load_dotenv()
 if "OPENAI_API_KEY" in st.secrets:
     os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
-"""
-このファイルは、Webアプリのメイン処理が記述されたファイルです。
-"""
+# ★★★ ここにあった文字列（"""..."""）を削除しました ★★★
 
 ############################################################
 # 3. 初期化処理
