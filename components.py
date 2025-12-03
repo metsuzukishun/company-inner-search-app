@@ -36,26 +36,33 @@ def display_select_mode():
         )
 
 
+def display_sidebar_guide():
+    """
+    サイドバーに機能説明を表示（新規追加）
+    """
+    # 見やすさのための区切り線
+    st.markdown("---")
+
+    # 「社内文書検索」の機能説明
+    st.markdown("**【「社内文書検索」を選択した場合】**")
+    st.info("入力内容と関連性が高い社内文書のありかを検索できます。")
+    st.code("【入力例】\n社員の育成方針に関するMTGの議事録", wrap_lines=True, language=None)
+
+    # 「社内問い合わせ」の機能説明
+    st.markdown("**【「社内問い合わせ」を選択した場合】**")
+    st.info("質問・要望に対して、社内文書の情報をもとに回答を得られます。")
+    st.code("【入力例】\n人事部に所属している従業員情報を一覧化して", wrap_lines=True, language=None)
+
+
 def display_initial_ai_message():
     """
-    AIメッセージの初期表示
+    AIメッセージの初期表示（メインエリア用）
     """
-    with st.chat_message("assistant"):
-        # 「st.success()」とすると緑枠で表示される
-        st.markdown("こんにちは。私は社内文書の情報をもとに回答する生成AIチャットボットです。上記で利用目的を選択し、画面下部のチャット欄からメッセージを送信してください。")
-
-        # 「社内文書検索」の機能説明
-        st.markdown("**【「社内文書検索」を選択した場合】**")
-        # 「st.info()」を使うと青枠で表示される
-        st.info("入力内容と関連性が高い社内文書のありかを検索できます。")
-        # 「st.code()」を使うとコードブロックの装飾で表示される
-        # 「wrap_lines=True」で折り返し設定、「language=None」で非装飾とする
-        st.code("【入力例】\n社員の育成方針に関するMTGの議事録", wrap_lines=True, language=None)
-
-        # 「社内問い合わせ」の機能説明
-        st.markdown("**【「社内問い合わせ」を選択した場合】**")
-        st.info("質問・要望に対して、社内文書の情報をもとに回答を得られます。")
-        st.code("【入力例】\n人事部に所属している従業員情報を一覧化して", wrap_lines=True, language=None)
+    # 課題画像の見た目（緑色の枠）に合わせる
+    st.success("こんにちは。私は社内文書の情報をもとに回答する生成AIチャットボットです。サイドバーで利用目的を選択し、画面下部のチャット欄からメッセージを送信してください。", icon="🤖")
+    
+    # 課題画像の見た目（黄色の枠）に合わせて注意書きを追加
+    st.warning("具体的に入力したほうが期待通りの回答を得やすいです。", icon="⚠️")
 
 
 def display_conversation_log():
